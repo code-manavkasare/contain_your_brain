@@ -1,0 +1,15 @@
+export const colors = {
+  text: '#191919',
+  primary: '#007BC1',
+  secondary: '#018A00',
+  tertiary: '#B71515',
+  card: '#fff',
+  background: '#fff',
+  gray: '#757575',
+  shadow: 'rgba(0,0,0,0.4)',
+  border: '#686868',
+  tileBorder: 'rgba(104, 104, 104, 0.2)',
+  placeholder: '#757575',
+  inactive: '#E7EAEE',
+  searchbar: 'rgba(118, 118, 128, 0.12)',
+};
