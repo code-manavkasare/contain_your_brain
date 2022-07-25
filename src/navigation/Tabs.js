@@ -73,15 +73,18 @@ export default function Tabs() {
           tabBarIcon: ({focused}) => (
             <View
               style={{
+                width: 88,
+                height: 87,
+                borderRadius: 44,
                 backgroundColor: colors.background,
+                marginTop: -sizes.padding * 2,
+                alignItems: 'center',
+                justifyContent: 'center',
               }}>
               <Feather
                 name="plus-circle"
                 color={focused ? colors.tertiary : colors.secondary}
                 size={sizes.icon * 2}
-                style={{
-                  marginTop: -sizes.padding * 2,
-                }}
               />
             </View>
           ),
