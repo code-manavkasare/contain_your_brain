@@ -1,5 +1,6 @@
 import {
   Image,
+  ImageEditor,
   ScrollView,
   StyleSheet,
   Text,
@@ -23,8 +24,17 @@ import {navigate} from '../services/navigation';
 export default function Worries() {
   const [query, setQuery] = useState('');
   const {worries} = useSelector(state => state.worries);
+  const [filteredWorries, setFilteredWorries] = useState(worries);
 
-  console.log('worries', worries);
+  const handleSearch = e => {
+    setQuery(e);
+    if (e === '') return setFilteredWorries(worries);
+    setFilteredWorries(
+      worries.filter(item =>
+        item.worry.toLowerCase().includes(e.toLowerCase()),
+      ),
+    );
+  };
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: colors.background}}>
@@ -35,7 +45,7 @@ export default function Worries() {
           <Feather name="search" color={colors.placeholder} size={sizes.h4} />
           <TextInput
             value={query}
-            onChangeText={e => setQuery(e)}
+            onChangeText={handleSearch}
             style={styles.subInput}
             placeholder="Search my worries"
             placeholderTextColor={colors.placeholder}
@@ -43,7 +53,7 @@ export default function Worries() {
         </View>
 
         <View style={{marginTop: sizes.padding * 2}}>
-          {worries.map((item, index) => (
+          {filteredWorries.map((item, index) => (
             <Tile
               text={item.worry}
               key={index}
@@ -92,6 +102,7 @@ const styles = StyleSheet.create({
   },
   subInput: {
     flex: 1,
+    color: colors.text,
     marginLeft: 5,
   },
   tile: {
