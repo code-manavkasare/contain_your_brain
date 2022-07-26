@@ -113,10 +113,22 @@ export default function Setup() {
   );
 }
 
-const Tile = ({time, day, duration, index}) => {
+const Tile = ({time, day, duration, addToCalendar, ringMyAlarm, index}) => {
   const dispatch = useDispatch();
 
-  const handleEdit = () => {};
+  const handleEdit = () => {
+    navigate('AddWorryTime', {
+      item: {
+        time,
+        day,
+        duration,
+        addToCalendar,
+        ringMyAlarm,
+      },
+      index,
+      edit: true,
+    });
+  };
   const handleRemove = () => {
     dispatch(removeWorryTime(index));
   };

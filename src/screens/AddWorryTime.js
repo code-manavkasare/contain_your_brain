@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -27,27 +27,54 @@ import {sizes} from '../constants/sizes';
 import {goBack} from '../services/navigation';
 
 import {useDispatch} from 'react-redux';
-import {appendWorryTime} from '../redux/actions/worries';
+import {appendWorryTime, updateWorryTime} from '../redux/actions/worries';
 
-export default function AddWorryTime() {
+export default function AddWorryTime({route}) {
+  const {item, index, edit} = route && route.params ? route.params : {};
   const [duration, setDuration] = useState(15);
   const [day, setDay] = useState([]);
   const [addToCalendar, setAddToCalendar] = useState(false);
-  const [ringMyAlaram, setRingMyAlarm] = useState(false);
-  const [show, setShow] = useState(false);
+  const [ringMyAlarm, setRingMyAlarm] = useState(false);
   const [time, setTime] = useState(undefined);
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (edit) {
+      setDay(item.day);
+      setTime(item.time);
+      setDuration(item.duration);
+      setRingMyAlarm(item.ringMyAlarm);
+      setAddToCalendar(item.addToCalendar);
+    }
+  }, []);
 
   const handleSave = () => {
     const data = {
+      index,
       time,
       day,
       duration,
       addToCalendar,
-      ringMyAlaram,
+      ringMyAlarm,
     };
-    dispatch(appendWorryTime(data));
+    if (edit) dispatch(updateWorryTime(data));
+    else dispatch(appendWorryTime(data));
     goBack();
+  };
+
+  const getActive = () => {
+    if (edit) {
+      return (
+        day !== item.day ||
+        duration !== item.duration ||
+        time !== item.time ||
+        addToCalendar !== item.addToCalendar ||
+        ringMyAlarm !== item.ringMyAlarm
+      );
+    } else {
+      return time && day;
+    }
   };
 
   return (
@@ -88,8 +115,8 @@ export default function AddWorryTime() {
             />
             <Tile
               text="Ring my alarm at this time"
-              selected={ringMyAlaram}
-              onPress={() => setRingMyAlarm(!ringMyAlaram)}
+              selected={ringMyAlarm}
+              onPress={() => setRingMyAlarm(!ringMyAlarm)}
             />
           </Container>
 
@@ -98,7 +125,7 @@ export default function AddWorryTime() {
               <Text style={styles.cancel}>Cancel time</Text>
             </TouchableOpacity>
             <Button
-              active={time && day}
+              active={getActive()}
               text="Save my time"
               onPress={handleSave}
             />
