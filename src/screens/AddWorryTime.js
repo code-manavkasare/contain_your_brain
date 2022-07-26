@@ -82,7 +82,7 @@ export default function AddWorryTime({route}) {
       <Time time={time} setTime={setTime} visible={show} setVisible={setShow} />
       <View style={styles.container}>
         <Screen>
-          <Heading>Add a worry time</Heading>
+          <Heading>{edit ? 'Update worry time' : 'Add a worry time'}</Heading>
           <Container>
             <Label>What time do I want to worry?</Label>
             <SectionButton
