@@ -15,7 +15,7 @@ import {sizes} from '../constants/sizes';
 import moment from 'moment';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Fifteen from '../assets/svg/Fifteen';
 import FourtyFive from '../assets/svg/FourtyFive';
 import Sixty from '../assets/svg/Sixty';
@@ -26,6 +26,7 @@ import SectionButton from '../components/SectionButton';
 import {navigate} from '../services/navigation';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {removeWorryTime} from '../redux/actions/worries';
 
 export default function Setup() {
   const [place, setPlace] = useState('');
@@ -106,8 +107,12 @@ export default function Setup() {
 }
 
 const Tile = ({time, day, duration, index}) => {
+  const dispatch = useDispatch();
+
   const handleEdit = () => {};
-  const handleRemove = () => {};
+  const handleRemove = () => {
+    dispatch(removeWorryTime(index));
+  };
 
   return (
     <View style={styles.tile}>

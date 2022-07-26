@@ -1,4 +1,9 @@
-import {SET_WORRY_TIMES, APPEND_WORRY_TIME, APPEND_WORRY} from './action.types';
+import {
+  SET_WORRY_TIMES,
+  APPEND_WORRY_TIME,
+  APPEND_WORRY,
+  REMOVE_WORRY_TIME,
+} from './action.types';
 
 export const setWorryTimes = data => ({
   type: SET_WORRY_TIMES,
@@ -7,6 +12,11 @@ export const setWorryTimes = data => ({
 
 export const appendWorryTime = data => ({
   type: APPEND_WORRY_TIME,
+  data,
+});
+
+export const removeWorryTime = data => ({
+  type: REMOVE_WORRY_TIME,
   data,
 });
 
