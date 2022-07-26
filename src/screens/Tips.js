@@ -10,7 +10,9 @@ import {colors} from '../constants/colors';
 import {sizes} from '../constants/sizes';
 import data from '../constants/tips.json';
 
-export default function Tips() {
+export default function Tips({route}) {
+  // Change data according to type (ex: type coudld be 'worryTimes', 'worryPlace', 'sortMyWorry', 'solveMyWorry', 'addWorry')
+  const {type} = route && route.params ? route.params : {};
   return (
     <ScrollView style={styles.screen}>
       <Screen>

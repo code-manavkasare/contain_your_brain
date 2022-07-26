@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import Heading from '../components/Heading';
@@ -44,14 +45,17 @@ export default function Setup() {
 
         <View style={[styles.row, {marginTop: sizes.padding}]}>
           <Label>What time/s do I want to worry?</Label>
-          <View style={styles.row}>
-            <Entypo
-              name="info-with-circle"
-              size={sizes.p}
-              color={colors.gray}
-            />
-            <Text style={styles.help}>Tips</Text>
-          </View>
+          <TouchableWithoutFeedback
+            onPress={() => navigate('Tips', {type: 'worryTimes'})}>
+            <View style={styles.row}>
+              <Entypo
+                name="info-with-circle"
+                size={sizes.p}
+                color={colors.gray}
+              />
+              <Text style={styles.help}>Tips</Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
         <SectionButton
           icon="plus-circle"
@@ -71,14 +75,17 @@ export default function Setup() {
 
         <View style={[styles.row, {marginTop: sizes.padding}]}>
           <Label>Where do I want to worry?</Label>
-          <View style={styles.row}>
-            <Entypo
-              name="info-with-circle"
-              size={sizes.p}
-              color={colors.gray}
-            />
-            <Text style={styles.help}>Tips</Text>
-          </View>
+          <TouchableWithoutFeedback
+            onPress={() => navigate('Tips', {type: 'worryPlace'})}>
+            <View style={styles.row}>
+              <Entypo
+                name="info-with-circle"
+                size={sizes.p}
+                color={colors.gray}
+              />
+              <Text style={styles.help}>Tips</Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
 
         <TextInput

@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Screen from '../components/Screen';
 import Heading from '../components/Heading';
 import {colors} from '../constants/colors';
@@ -21,10 +21,22 @@ import {useSelector} from 'react-redux';
 
 import {navigate} from '../services/navigation';
 
+const sortArray = arr => {
+  const sortedArr = [
+    ...arr.filter(x => x.favourite),
+    ...arr.filter(x => !x.favourite),
+  ];
+  return sortedArr;
+};
+
 export default function Worries() {
   const [query, setQuery] = useState('');
   const {worries} = useSelector(state => state.worries);
-  const [filteredWorries, setFilteredWorries] = useState(worries);
+  const [filteredWorries, setFilteredWorries] = useState(sortArray(worries));
+
+  useEffect(() => {
+    setFilteredWorries(sortArray(worries));
+  }, [worries]);
 
   const handleSearch = e => {
     setQuery(e);
@@ -56,8 +68,9 @@ export default function Worries() {
           {filteredWorries.map((item, index) => (
             <Tile
               text={item.worry}
+              favourite={item.favourite}
               key={index}
-              onPress={() => navigate('Worry', {item})}
+              onPress={() => navigate('Worry', {item, index})}
             />
           ))}
         </View>
@@ -80,10 +93,14 @@ export default function Worries() {
   );
 }
 
-const Tile = ({text, onPress}) => (
+const Tile = ({text, favourite, onPress}) => (
   <TouchableWithoutFeedback onPress={onPress ? onPress : () => {}}>
     <View style={styles.tile}>
-      <AntDesign name="staro" size={sizes.h4} color={colors.gray} />
+      <AntDesign
+        name={favourite ? 'star' : 'staro'}
+        color={favourite ? colors.secondary : colors.gray}
+        size={sizes.h4}
+      />
       <Text style={styles.text}>{text}</Text>
       <Feather name="chevron-right" color={colors.text} size={sizes.h4} />
     </View>

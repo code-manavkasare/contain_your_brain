@@ -3,6 +3,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
@@ -20,20 +21,32 @@ import Button from '../components/Button';
 
 import {appendWorry, setWorryTimes} from '../redux/actions/worries';
 import {useDispatch} from 'react-redux';
+import {navigate} from '../services/navigation';
 
 export default function AddWorry() {
   const [worry, setWorry] = useState('');
   const [info, setInfo] = useState('');
+  const [favourite, setFavourite] = useState(false);
   const dispatch = useDispatch();
 
   const handleSave = () => {
     const data = {
+      id: Date.now().toString(),
       worry,
       info,
+      favourite,
+      solve: '',
       status: 'unsolvable',
     };
     dispatch(appendWorry(data));
     dispatch(setWorryTimes([]));
+    setWorry('');
+    setInfo('');
+    setFavourite(false);
+  };
+
+  const handleCancel = () => {
+    setFavourite(false);
     setWorry('');
     setInfo('');
   };
@@ -43,19 +56,23 @@ export default function AddWorry() {
       <View style={styles.row}>
         <Heading>Add a worry</Heading>
         <View style={styles.row}>
-          <View style={styles.row}>
-            <Entypo
-              name="info-with-circle"
-              size={sizes.p}
-              color={colors.gray}
-            />
-            <Text style={styles.help}>Tip</Text>
-          </View>
+          <TouchableWithoutFeedback
+            onPress={() => navigate('Tips', {type: 'addWorry'})}>
+            <View style={styles.row}>
+              <Entypo
+                name="info-with-circle"
+                size={sizes.p}
+                color={colors.gray}
+              />
+              <Text style={styles.help}>Tip</Text>
+            </View>
+          </TouchableWithoutFeedback>
           <AntDesign
-            name="staro"
+            name={favourite ? 'star' : 'staro'}
+            color={favourite ? colors.secondary : colors.gray}
             size={sizes.h4}
             style={{marginLeft: sizes.padding / 2}}
-            color={colors.gray}
+            onPress={() => setFavourite(prev => !prev)}
           />
         </View>
       </View>
@@ -92,7 +109,7 @@ export default function AddWorry() {
 
       <Container>
         <View style={styles.row}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleCancel}>
             <Text style={styles.cancel}>Cancel</Text>
           </TouchableOpacity>
           <Button

@@ -10,6 +10,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import SetupStack from './SetupStack';
 import Header from '../components/Header';
 import {View} from 'react-native';
+import AddWorryStack from './AddWorryStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -61,14 +62,14 @@ export default function Tabs() {
       />
       <Tab.Screen
         name="AddWorry"
-        component={AddWorry}
+        component={AddWorryStack}
         options={{
           tabBarLabelStyle: {
             color: colors.secondary,
             marginBottom: sizes.padding * 2,
             fontWeight: 'bold',
           },
-          header: () => <Header />,
+          headerShown: false,
           tabBarLabel: 'Add a Worry',
           tabBarIcon: ({focused}) => (
             <View

@@ -1,24 +1,17 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import Header from '../components/Header';
-import {AddWorryTime, Setup, Tips} from '../screens';
+import {AddWorry, Tips} from '../screens';
 
 const Stack = createNativeStackNavigator();
 
-export default function SetupStack() {
+export default function AddWorryStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="SetupScreen"
-        component={Setup}
+        name="AddWorryScreen"
+        component={AddWorry}
         options={{header: () => <Header />}}
-      />
-      <Stack.Screen
-        name="AddWorryTime"
-        component={AddWorryTime}
-        options={{
-          header: () => <Header showBack />,
-        }}
       />
       <Stack.Screen
         name="Tips"

@@ -3,11 +3,12 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import Screen from '../components/Screen';
 import Heading from '../components/Heading';
 import {colors} from '../constants/colors';
@@ -23,15 +24,53 @@ import Label from '../components/Label';
 import ActiveRadio from '../assets/svg/ActiveRadio';
 import InactiveRadio from '../assets/svg/InactiveRadio.js';
 import Button from '../components/Button';
+import {goBack, navigate} from '../services/navigation';
+import {useDispatch} from 'react-redux';
+import {removeWorry, updateWorry} from '../redux/actions/worries';
 
 export default function Worry({route}) {
-  const {item} = route?.params;
+  const worryRef = useRef();
+  const infoRef = useRef();
+  const solveRef = useRef();
+  const dispatch = useDispatch();
+  const {item, index} = route?.params;
+  const [info, setInfo] = useState(item.info);
+  const [solve, setSolve] = useState(item.solve);
+  const [worry, setWorry] = useState(item.worry);
   const [status, setStatus] = useState(item.status);
+  const [favourite, setFavourite] = useState(item.favourite);
 
   const handleFav = () => {};
-  const handleRemove = () => {};
-  const handleEditHeading = () => {};
-  const handleSave = () => {};
+
+  const handleRemove = () => {
+    goBack();
+    dispatch(removeWorry(item.id));
+  };
+
+  const handleEditHeading = () => {
+    worryRef.current.focus();
+  };
+
+  const handleEditInfo = () => {
+    infoRef.current.focus();
+  };
+
+  const handleEditSolve = () => {
+    solveRef.current.focus();
+  };
+
+  const handleSave = () => {
+    const data = {
+      id: item.id,
+      worry,
+      info,
+      solve,
+      status,
+      favourite,
+    };
+    dispatch(updateWorry(data));
+    goBack();
+  };
 
   return (
     <ScrollView style={styles.screen}>
@@ -52,14 +91,24 @@ export default function Worry({route}) {
           <TouchableOpacity
             onPress={handleFav}
             style={{marginLeft: sizes.padding}}>
-            <AntDesign name="staro" color={colors.gray} size={sizes.h3} />
+            <AntDesign
+              name={favourite ? 'star' : 'staro'}
+              color={favourite ? colors.secondary : colors.gray}
+              onPress={() => setFavourite(prev => !prev)}
+              size={sizes.h3}
+            />
           </TouchableOpacity>
         </View>
 
         <Container>
           <View style={[styles.row, {alignItems: 'flex-start'}]}>
             <View style={{flex: 1}}>
-              <Heading color={colors.secondary}>{item.worry}</Heading>
+              <TextInput
+                value={worry}
+                onChangeText={e => setWorry(e)}
+                ref={worryRef}
+                style={styles.heading}
+              />
             </View>
 
             <TouchableOpacity onPress={handleEditHeading}>
@@ -74,15 +123,17 @@ export default function Worry({route}) {
 
         <View style={[styles.row, {alignItems: 'flex-start'}]}>
           <View style={{flex: 1}}>
-            <Text style={styles.info}>{item.info}</Text>
+            <TextInput
+              value={info}
+              onChangeText={e => setInfo(e)}
+              ref={infoRef}
+              multiline
+              style={styles.info}
+            />
           </View>
 
-          <TouchableOpacity onPress={handleEditHeading}>
-            <MaterialCommunityIcons
-              name="pencil-outline"
-              color={colors.gray}
-              size={sizes.h3}
-            />
+          <TouchableOpacity onPress={handleEditInfo}>
+            <MaterialCommunityIcons dataolor={colors.gray} size={sizes.h3} />
           </TouchableOpacity>
         </View>
 
@@ -92,14 +143,17 @@ export default function Worry({route}) {
               <SubHeading>Sort my worry</SubHeading>
             </View>
 
-            <View style={styles.row}>
-              <Entypo
-                name="info-with-circle"
-                size={sizes.p}
-                color={colors.gray}
-              />
-              <Text style={styles.help}>Tips</Text>
-            </View>
+            <TouchableWithoutFeedback
+              onPress={() => navigate('Tips', {type: 'sortMyWorry'})}>
+              <View style={styles.row}>
+                <Entypo
+                  name="info-with-circle"
+                  size={sizes.p}
+                  color={colors.gray}
+                />
+                <Text style={styles.help}>Tips</Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
           <Label>This step helps address my worry more effectively.</Label>
 
@@ -138,27 +192,32 @@ export default function Worry({route}) {
               <SubHeading>Solve my worry</SubHeading>
             </View>
 
-            <View style={styles.row}>
-              <Entypo
-                name="info-with-circle"
-                size={sizes.p}
-                color={colors.gray}
-              />
-              <Text style={styles.help}>Tips</Text>
-            </View>
+            <TouchableWithoutFeedback
+              onPress={() => navigate('Tips', {type: 'sortMyWorry'})}>
+              <View style={styles.row}>
+                <Entypo
+                  name="info-with-circle"
+                  size={sizes.p}
+                  color={colors.gray}
+                />
+                <Text style={styles.help}>Tips</Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
           <Label>What can I do to solve this worry?</Label>
 
           <View style={[styles.row, {alignItems: 'flex-start'}]}>
             <View style={{flex: 1}}>
-              <Text style={styles.info}>
-                Phasellus eget sem vitae velit condiment umemo tincidunt
-                porttitor diam non. Proin pretium purus et erat Scelerisque
-                Bibendum rutrum Ipsum rutrum
-              </Text>
+              <TextInput
+                value={solve}
+                onChangeText={e => setSolve(e)}
+                ref={solveRef}
+                multiline
+                style={styles.solve}
+              />
             </View>
 
-            <TouchableOpacity onPress={handleEditHeading}>
+            <TouchableOpacity onPress={handleEditSolve}>
               <MaterialCommunityIcons
                 name="pencil-outline"
                 color={colors.gray}
@@ -189,7 +248,17 @@ export default function Worry({route}) {
             <TouchableOpacity style={{flex: 1}}>
               <Text style={styles.cancel}>Cancel</Text>
             </TouchableOpacity>
-            <Button active onPress={handleSave} text="Save my worry" />
+            <Button
+              active={
+                status !== item.status ||
+                worry !== item.worry ||
+                info !== item.info ||
+                solve !== item.solve ||
+                favourite !== item.favourite
+              }
+              onPress={handleSave}
+              text="Save my worry"
+            />
           </View>
         </Container>
       </Screen>
@@ -250,5 +319,27 @@ const styles = StyleSheet.create({
   },
   cancel: {
     color: colors.tertiary,
+  },
+  heading: {
+    fontWeight: 'bold',
+    fontSize: sizes.h3,
+    color: colors.secondary,
+    margin: 0,
+    padding: 0,
+    marginRight: sizes.padding,
+  },
+  info: {
+    fontSize: sizes.h5,
+    color: colors.text,
+    margin: 0,
+    padding: 0,
+    marginRight: sizes.padding,
+  },
+  solve: {
+    fontSize: sizes.h5,
+    color: colors.text,
+    margin: 0,
+    padding: 0,
+    marginRight: sizes.padding,
   },
 });
