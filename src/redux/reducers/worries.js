@@ -10,6 +10,8 @@ import {
   UPDATE_WORRY_TIME,
 } from '../actions/action.types';
 
+import {showToast} from '../../services/toast';
+
 const initialState = {
   worryTimes: [],
   worries: [],
@@ -20,11 +22,13 @@ const worries = (state = initialState, action) => {
     case SET_WORRY_TIMES:
       return {...state, worryTimes: action.data};
     case APPEND_WORRY_TIME:
+      showToast('success', 'Success', 'Successfully added your worry times');
       return {...state, worryTimes: [...state.worryTimes, action.data]};
     case REMOVE_WORRY_TIME:
       const newWorriesTimes = state.worryTimes.filter(
         (item, index) => index !== action.data,
       );
+      showToast('success', 'Success', 'Successfully removed your worry time');
       return {...state, worryTimes: newWorriesTimes};
     case UPDATE_WORRY_TIME:
       const worryTimeClone = state.worryTimes;
@@ -37,15 +41,18 @@ const worries = (state = initialState, action) => {
       worryTimeClone[worryTimeIndex].day = action.data.day;
       worryTimeClone[worryTimeIndex].addToCalendar = action.data.addToCalendar;
       worryTimeClone[worryTimeIndex].ringMyAlarm = action.data.ringMyAlarm;
+      showToast('success', 'Success', 'Successfully updated your worry time');
       return {...state, worryTimes: [...worryTimeClone]};
     case SET_WORRIES:
       return {...state, worries: action.data};
     case APPEND_WORRY:
       storeJson('worries', [...state.worries, action.data]);
+      showToast('success', 'Success', 'Successfully added your worry');
       return {...state, worries: [...state.worries, action.data]};
     case REMOVE_WORRY:
       const newWorries = state.worries.filter(item => item.id !== action.data);
       storeJson('worries', newWorries);
+      showToast('success', 'Success', 'Successfully removed your worry');
       return {...state, worries: newWorries};
     case UPDATE_WORRY:
       const clone = state.worries;
@@ -57,6 +64,7 @@ const worries = (state = initialState, action) => {
       clone[index].status = action.data.status;
       clone[index].favourite = action.data.favourite;
       storeJson('worries', clone);
+      showToast('success', 'Success', 'Successfully updated your worry');
       return {...state, worries: [...clone]};
     default:
       return state;
