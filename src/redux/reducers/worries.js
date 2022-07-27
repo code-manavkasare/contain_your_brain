@@ -1,8 +1,10 @@
+import {storeJson} from '../../services/store';
 import {
   APPEND_WORRY,
   APPEND_WORRY_TIME,
   REMOVE_WORRY,
   REMOVE_WORRY_TIME,
+  SET_WORRIES,
   SET_WORRY_TIMES,
   UPDATE_WORRY,
   UPDATE_WORRY_TIME,
@@ -29,7 +31,6 @@ const worries = (state = initialState, action) => {
       const worryTimeIndex = worryTimeClone.findIndex(
         (item, index) => index === action.data.index,
       );
-      console.log('index', worryTimeIndex);
       if (worryTimeIndex === -1) return state;
       worryTimeClone[worryTimeIndex].time = action.data.time;
       worryTimeClone[worryTimeIndex].duration = action.data.duration;
@@ -37,10 +38,14 @@ const worries = (state = initialState, action) => {
       worryTimeClone[worryTimeIndex].addToCalendar = action.data.addToCalendar;
       worryTimeClone[worryTimeIndex].ringMyAlarm = action.data.ringMyAlarm;
       return {...state, worryTimes: [...worryTimeClone]};
+    case SET_WORRIES:
+      return {...state, worries: action.data};
     case APPEND_WORRY:
+      storeJson('worries', [...state.worries, action.data]);
       return {...state, worries: [...state.worries, action.data]};
     case REMOVE_WORRY:
       const newWorries = state.worries.filter(item => item.id !== action.data);
+      storeJson('worries', newWorries);
       return {...state, worries: newWorries};
     case UPDATE_WORRY:
       const clone = state.worries;
@@ -51,6 +56,7 @@ const worries = (state = initialState, action) => {
       clone[index].worry = action.data.worry;
       clone[index].status = action.data.status;
       clone[index].favourite = action.data.favourite;
+      storeJson('worries', clone);
       return {...state, worries: [...clone]};
     default:
       return state;
