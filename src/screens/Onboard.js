@@ -71,7 +71,6 @@ export default function Onboard() {
     )
       .then(async success => {
         const notFirstTime = await getString('notFirstTime');
-        console.log('notFistTime', notFirstTime);
         if (notFirstTime) {
           dispatch(
             authenticate({
