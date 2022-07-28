@@ -21,6 +21,7 @@ import TouchID from 'react-native-touch-id';
 import {useDispatch} from 'react-redux';
 import {authenticate} from '../redux/actions/auth';
 import {showToast} from '../services/toast';
+import {getString} from '../services/store';
 
 export default function Onboard() {
   const dispatch = useDispatch();
@@ -68,13 +69,25 @@ export default function Onboard() {
       'Authenticate to Contain Your Brain',
       optionalConfigObject,
     )
-      .then(success => {
-        dispatch(
-          authenticate({
-            type: faceIdSupported ? 'face' : 'touch',
-          }),
-          showToast('success', 'Success', 'Authenticated successfully!'),
-        );
+      .then(async success => {
+        const notFirstTime = await getString('notFirstTime');
+        console.log('notFistTime', notFirstTime);
+        if (notFirstTime) {
+          dispatch(
+            authenticate({
+              type: faceIdSupported ? 'face' : 'touch',
+              notFirstTime: true,
+            }),
+          );
+        } else {
+          dispatch(
+            authenticate({
+              type: faceIdSupported ? 'face' : 'touch',
+              notFirstTime: false,
+            }),
+          );
+        }
+        showToast('success', 'Success', 'Authenticated successfully!');
       })
       .catch(error => {
         console.log('error authenticating', error);

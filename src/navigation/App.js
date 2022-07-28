@@ -4,6 +4,7 @@ import {StatusBar} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {colors} from '../constants/colors';
 import {setWorries} from '../redux/actions/worries';
+import Welcome from '../screens/Welcome';
 import {navigationRef} from '../services/navigation';
 import {getJson} from '../services/store';
 import Auth from './Auth';
@@ -25,7 +26,13 @@ export default function () {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      {!authentication ? <Auth /> : <Tabs />}
+      {!authentication ? (
+        <Auth />
+      ) : authentication.notFirstTime ? (
+        <Tabs />
+      ) : (
+        <Welcome />
+      )}
     </NavigationContainer>
   );
 }

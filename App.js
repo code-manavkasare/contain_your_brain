@@ -9,11 +9,15 @@ import AppNavigation from './src/navigation/App';
 import store from './src/redux/store';
 import {toastConfig} from './src/services/toast';
 
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+
 export default function App() {
   return (
-    <Provider store={store}>
-      <AppNavigation />
-      <Toast config={toastConfig} />
-    </Provider>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <Provider store={store}>
+        <AppNavigation />
+        <Toast config={toastConfig} />
+      </Provider>
+    </GestureHandlerRootView>
   );
 }
