@@ -1,3 +1,5 @@
+export const AUTH = 'AUTH';
+
 export const SET_WORRY_TIMES = 'SET_WORRY_TIMES';
 export const APPEND_WORRY_TIME = 'APPEND_WORRY_TIME';
 export const REMOVE_WORRY_TIME = 'REMOVE_WORRY_TIME';

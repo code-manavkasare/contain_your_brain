@@ -1,0 +1,86 @@
+import * as React from 'react';
+import Svg, {Circle} from 'react-native-svg';
+
+const Passcode = props => (
+  <Svg
+    width={70}
+    height={70}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}>
+    <Circle
+      cx={9.699}
+      cy={9.699}
+      r={7.699}
+      fill="#fff"
+      stroke="#737373"
+      strokeWidth={4}
+    />
+    <Circle
+      cx={35}
+      cy={9.699}
+      r={7.699}
+      fill="#fff"
+      stroke="#737373"
+      strokeWidth={4}
+    />
+    <Circle
+      cx={60.301}
+      cy={9.699}
+      r={7.699}
+      fill="#fff"
+      stroke="#737373"
+      strokeWidth={4}
+    />
+    <Circle
+      cx={9.699}
+      cy={35}
+      r={7.699}
+      fill="#fff"
+      stroke="#737373"
+      strokeWidth={4}
+    />
+    <Circle
+      cx={35}
+      cy={35}
+      r={7.699}
+      fill="#fff"
+      stroke="#737373"
+      strokeWidth={4}
+    />
+    <Circle
+      cx={60.301}
+      cy={35}
+      r={7.699}
+      fill="#fff"
+      stroke="#737373"
+      strokeWidth={4}
+    />
+    <Circle
+      cx={9.699}
+      cy={60.301}
+      r={7.699}
+      fill="#fff"
+      stroke="#737373"
+      strokeWidth={4}
+    />
+    <Circle
+      cx={35}
+      cy={60.301}
+      r={7.699}
+      fill="#fff"
+      stroke="#737373"
+      strokeWidth={4}
+    />
+    <Circle
+      cx={60.301}
+      cy={60.301}
+      r={7.699}
+      fill="#fff"
+      stroke="#737373"
+      strokeWidth={4}
+    />
+  </Svg>
+);
+
+export default Passcode;

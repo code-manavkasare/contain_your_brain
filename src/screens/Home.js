@@ -14,6 +14,7 @@ import {navigate} from '../services/navigation';
 
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Brain from '../assets/svg/Brain';
 
 export default function () {
   return (
@@ -48,11 +49,12 @@ const Tile = ({text, onPress, download, brain, eye}) => {
             />
           )}
           {brain && (
-            <MaterialCommunityIcons
-              name="brain"
-              color={colors.primary}
-              size={sizes.icon * 0.75}
-            />
+            <Brain />
+            // <MaterialCommunityIcons
+            //   name="brain"
+            //   color={colors.primary}
+            //   size={sizes.icon * 0.75}
+            // />
           )}
           {eye && (
             <Feather
