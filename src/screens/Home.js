@@ -39,7 +39,7 @@ const Tile = ({text, onPress, download, brain, eye}) => {
   return (
     <TouchableWithoutFeedback onPress={onPress ? onPress : () => {}}>
       <View style={[styles.tile]}>
-        <View style={{marginRight: sizes.padding / 2}}>
+        <View style={{marginRight: sizes.padding}}>
           {download && (
             <Feather
               name="download"
