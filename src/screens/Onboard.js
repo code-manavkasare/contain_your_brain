@@ -13,7 +13,6 @@ import {sizes} from '../constants/sizes';
 
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import FaceId from '../assets/svg/FaceId';
-import Passcode from '../assets/svg/Passcode';
 import TouchId from '../assets/svg/TouchId';
 import {colors} from '../constants/colors';
 
@@ -22,10 +21,6 @@ import TouchID from 'react-native-touch-id';
 import {useDispatch} from 'react-redux';
 import {authenticate} from '../redux/actions/auth';
 import {showToast} from '../services/toast';
-
-import ReactNativeBiometrics from 'react-native-biometrics';
-
-const rnBiometrics = new ReactNativeBiometrics({allowDeviceCredentials: true});
 
 export default function Onboard() {
   const dispatch = useDispatch();
@@ -54,19 +49,19 @@ export default function Onboard() {
       .catch(error => {
         console.log(error);
       });
-    // const {biometryType} = await rnBiometrics.isSensorAvailable();
-    // console.log(biometryType);
   };
 
   const handleAuthenticate = () => {
     const optionalConfigObject = {
       title: 'Authentication Required',
       imageColor: colors.primary,
-      imageErrorColor: colors.primary,
+      imageErrorColor: colors.tertiary,
       sensorDescription: 'Touch sensor',
+      sensorErrorDescription: 'Failed',
       cancelText: 'Cancel',
+      fallbackLabel: 'Show Passcode',
       unifiedErrors: false,
-      passcodeFallback: true,
+      passcodeFallback: false,
     };
 
     TouchID.authenticate(
@@ -93,32 +88,6 @@ export default function Onboard() {
       });
   };
 
-  const handlePasscode = () => {
-    rnBiometrics
-      .simplePrompt({promptMessage: 'Confirm fingerprint'})
-      .then(resultObject => {
-        const {success} = resultObject;
-
-        if (success) {
-          console.log('successful biometrics provided');
-        } else {
-          console.log('user cancelled biometric prompt');
-        }
-      })
-      .catch(() => {
-        console.log('biometrics failed');
-      });
-    // PasscodeAuth.authenticate('to demo this react-native component')
-    //   .then(success => {
-    //     // Success code
-    //     console.log(success);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //     // Failure code
-    //   });
-  };
-
   return (
     <Screen>
       <View style={styles.screen}>
@@ -141,30 +110,40 @@ export default function Onboard() {
                 marginTop: sizes.padding * 3,
               },
             ]}>
-            <View style={styles.container}>
-              <View style={styles.icon}>
-                <FaceId />
-              </View>
-              <Text style={styles.label}>Use</Text>
-              <Text style={styles.label}>Face Recognition</Text>
-            </View>
-            <TouchableWithoutFeedback onPress={handlePasscode}>
+            <TouchableWithoutFeedback
+              disabled={!faceIdSupported}
+              onPress={handleAuthenticate}>
               <View style={styles.container}>
                 <View style={styles.icon}>
-                  <Passcode />
+                  <FaceId color={!faceIdSupported && colors.tertiary} />
                 </View>
-
-                <Text style={styles.label}>Use your</Text>
-                <Text style={styles.label}>Phone's Passcode</Text>
+                {faceIdSupported ? (
+                  <>
+                    <Text style={styles.label}>Use</Text>
+                    <Text style={styles.label}>Face Recognition</Text>
+                  </>
+                ) : (
+                  <Text style={[styles.label, {color: colors.tertiary}]}>
+                    Not available
+                  </Text>
+                )}
               </View>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={handleAuthenticate}>
               <View style={styles.container}>
                 <View style={styles.icon}>
-                  <TouchId />
+                  <TouchId color={!touchIdSupported && colors.tertiary} />
                 </View>
-                <Text style={styles.label}>Use</Text>
-                <Text style={styles.label}>Fingerprint sensor</Text>
+                {touchIdSupported ? (
+                  <>
+                    <Text style={styles.label}>Use</Text>
+                    <Text style={styles.label}>Fingerprint sensor</Text>
+                  </>
+                ) : (
+                  <Text style={[styles.label, {color: colors.tertiary}]}>
+                    Not available
+                  </Text>
+                )}
               </View>
             </TouchableWithoutFeedback>
           </View>
