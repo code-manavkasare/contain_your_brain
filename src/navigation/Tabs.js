@@ -11,6 +11,7 @@ import SetupStack from './SetupStack';
 import Header from '../components/Header';
 import {View} from 'react-native';
 import AddWorryStack from './AddWorryStack';
+import BigHeader from '../components/BigHeader';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,6 +38,7 @@ export default function Tabs() {
         name="Home"
         component={Home}
         options={{
+          header: () => <BigHeader />,
           tabBarIcon: ({focused}) => (
             <Feather
               name="home"
