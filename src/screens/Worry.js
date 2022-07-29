@@ -266,8 +266,7 @@ export default function Worry({route}) {
                 status !== item.status ||
                 worry !== item.worry ||
                 info !== item.info ||
-                solve !== item.solve ||
-                favourite !== item.favourite
+                solve !== item.solve
               }
               onPress={handleSave}
               text="Save my worry"
