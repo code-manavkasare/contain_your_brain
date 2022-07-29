@@ -108,7 +108,7 @@ export default function AddWorry() {
       </Container>
 
       <Container>
-        <View style={styles.row}>
+        <View style={[styles.row, {marginBottom: sizes.padding * 4}]}>
           <TouchableOpacity onPress={handleCancel}>
             <Text style={styles.cancel}>Cancel</Text>
           </TouchableOpacity>

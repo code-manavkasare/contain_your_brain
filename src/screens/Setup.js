@@ -97,7 +97,7 @@ export default function Setup() {
         />
       </View>
 
-      <View style={styles.container}>
+      <View style={[styles.container, {marginBottom: sizes.padding * 4}]}>
         <View style={styles.row}>
           <TouchableOpacity>
             <Text style={styles.cancel}>Cancel setup</Text>

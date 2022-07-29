@@ -22,7 +22,8 @@ export default function Tabs() {
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
           backgroundColor: colors.card,
-          height: sizes.height * 0.1,
+          // height: sizes.height * 0.1,
+          height: 102,
           elevation: 10,
           shadowOpacity: 1,
           shadowColor: colors.shadow,

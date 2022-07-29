@@ -59,6 +59,19 @@ export default function Worry({route}) {
     solveRef.current.focus();
   };
 
+  const handleStar = () => {
+    const data = {
+      id: item.id,
+      worry,
+      info,
+      solve,
+      status,
+      favourite: !favourite,
+    };
+    dispatch(updateWorry(data));
+    setFavourite(prev => !prev);
+  };
+
   const handleSave = () => {
     const data = {
       id: item.id,
@@ -94,7 +107,7 @@ export default function Worry({route}) {
             <AntDesign
               name={favourite ? 'star' : 'staro'}
               color={favourite ? colors.secondary : colors.gray}
-              onPress={() => setFavourite(prev => !prev)}
+              onPress={handleStar}
               size={sizes.h3}
             />
           </TouchableOpacity>
