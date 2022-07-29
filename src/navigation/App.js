@@ -26,13 +26,13 @@ export default function () {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      {/* {!authentication ? (
+      {!authentication ? (
         <Auth />
-      ) : authentication.notFirstTime ? ( */}
-      <Tabs />
-      {/* ) : (
+      ) : authentication.notFirstTime ? (
+        <Tabs />
+      ) : (
         <Welcome />
-      )} */}
+      )}
     </NavigationContainer>
   );
 }
