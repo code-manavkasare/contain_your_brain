@@ -1,6 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {StatusBar} from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 import {useDispatch, useSelector} from 'react-redux';
 import {colors} from '../constants/colors';
 import {setWorries} from '../redux/actions/worries';
@@ -25,7 +26,7 @@ export default function () {
   };
 
   return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer onReady={SplashScreen.hide} ref={navigationRef}>
       {!authentication ? (
         <Auth />
       ) : authentication.notFirstTime ? (

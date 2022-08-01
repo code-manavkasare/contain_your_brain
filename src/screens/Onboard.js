@@ -40,7 +40,6 @@ export default function Onboard() {
 
     TouchID.isSupported(optionalConfigObject)
       .then(biometryType => {
-        console.log(biometryType);
         if (biometryType === 'FaceID') {
           setFaceIdSupported(true);
         } else {
@@ -89,7 +88,6 @@ export default function Onboard() {
         showToast('success', 'Success', 'Authenticated successfully!');
       })
       .catch(error => {
-        console.log('error authenticating', error);
         if (Platform.OS === 'ios') {
           if (error.name === 'LAErrorUserCancel') return;
           return showToast('success', 'Error', error.message);

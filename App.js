@@ -11,13 +11,7 @@ import {toastConfig} from './src/services/toast';
 
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
-import SplashScreen from 'react-native-splash-screen';
-
 export default function App() {
-  useEffect(() => {
-    SplashScreen.hide();
-  }, []);
-
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <Provider store={store}>
