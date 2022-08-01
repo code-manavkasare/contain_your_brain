@@ -11,11 +11,11 @@ import {toastConfig} from './src/services/toast';
 
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
-import RNBootSplash from 'react-native-bootsplash';
+import SplashScreen from 'react-native-splash-screen';
 
 export default function App() {
   useEffect(() => {
-    RNBootSplash.hide({fade: true});
+    SplashScreen.hide();
   }, []);
 
   return (
