@@ -10,7 +10,7 @@ export default function Label({children, color}) {
 const styles = StyleSheet.create({
   label: {
     fontWeight: 'bold',
-    fontSize: sizes.p,
+    fontSize: sizes.h5,
     color: colors.secondary,
     marginBottom: sizes.padding / 2,
   },

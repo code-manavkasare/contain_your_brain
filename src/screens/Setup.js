@@ -29,11 +29,83 @@ import {navigate} from '../services/navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {removeWorryTime} from '../redux/actions/worries';
 
+import {SwipeListView} from 'react-native-swipe-list-view';
+
 export default function Setup() {
+  const dispatch = useDispatch();
   const [place, setPlace] = useState('');
   const {worryTimes} = useSelector(state => state.worries);
 
   const handleSave = () => {};
+
+  const handleEdit = ({
+    index,
+    time,
+    day,
+    duration,
+    addToCalendar,
+    ringMyAlarm,
+    rowMap,
+  }) => {
+    closeRow(rowMap, index);
+    navigate('AddWorryTime', {
+      item: {
+        time,
+        day,
+        duration,
+        addToCalendar,
+        ringMyAlarm,
+      },
+      index,
+      edit: true,
+    });
+  };
+
+  const handleRemove = (index, rowMap) => {
+    closeRow(rowMap, index);
+    dispatch(removeWorryTime(index));
+  };
+
+  const closeRow = (rowMap, rowKey) => {
+    if (rowMap[rowKey]) {
+      rowMap[rowKey].closeRow();
+    }
+  };
+
+  const renderHiddenItem = (data, rowMap) => (
+    <View style={styles.rowBack}>
+      <TouchableWithoutFeedback
+        onPress={() =>
+          handleEdit({
+            index: data.index,
+            time: data.item.time,
+            day: data.item.day,
+            duration: data.item.duration,
+            addToCalendar: data.item.addToCalendar,
+            ringMyAlarm: data.item.ringMyAlarm,
+            rowMap,
+          })
+        }>
+        <View style={[styles.btn, {backgroundColor: colors.secondary}]}>
+          <MaterialCommunityIcons
+            name="pencil-outline"
+            color={colors.card}
+            size={sizes.h3}
+          />
+        </View>
+      </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback
+        onPress={() => handleRemove(data.index, rowMap)}>
+        <View style={[styles.btn, {backgroundColor: colors.tertiary}]}>
+          <MaterialCommunityIcons
+            name="trash-can-outline"
+            color={colors.card}
+            size={sizes.h3}
+          />
+        </View>
+      </TouchableWithoutFeedback>
+    </View>
+  );
 
   return (
     <KeyboardAwareScrollView style={styles.screen}>
@@ -64,9 +136,20 @@ export default function Setup() {
         />
 
         <Container>
-          {worryTimes.map((item, index) => (
-            <Tile key={index} {...item} index={index} />
-          ))}
+          <SwipeListView
+            data={worryTimes}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({item, index}) => (
+              <Tile key={index} {...item} index={index} />
+            )}
+            contentContainerStyle={{
+              borderRadius: sizes.radius,
+              backgroundColor: colors.card,
+            }}
+            renderHiddenItem={renderHiddenItem}
+            disableRightSwipe
+            rightOpenValue={-75 * 2}
+          />
         </Container>
       </View>
 
@@ -114,50 +197,28 @@ export default function Setup() {
 }
 
 const Tile = ({time, day, duration, addToCalendar, ringMyAlarm, index}) => {
-  const dispatch = useDispatch();
-
-  const handleEdit = () => {
-    navigate('AddWorryTime', {
-      item: {
-        time,
-        day,
-        duration,
-        addToCalendar,
-        ringMyAlarm,
-      },
-      index,
-      edit: true,
-    });
-  };
-  const handleRemove = () => {
-    dispatch(removeWorryTime(index));
-  };
-
   return (
     <View style={styles.tile}>
-      {getDurationIcon(duration)}
-      <View style={{flex: 1}}>
-        <Text style={[styles.tileText, {color: colors.text}]}>{day}</Text>
-        <Text style={[styles.tileText, {color: colors.secondary}]}>
+      <View style={{width: '25%', alignItems: 'center'}}>
+        <Text style={[styles.tileText, {color: colors.text}]}>
           {moment(time).format('h:mm a')}
         </Text>
       </View>
 
-      <TouchableOpacity onPress={handleEdit}>
-        <MaterialCommunityIcons
-          name="pencil-outline"
-          color={colors.gray}
-          size={sizes.h3}
-        />
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={handleRemove} style={{marginLeft: sizes.p}}>
-        <MaterialCommunityIcons
-          name="trash-can-outline"
-          color={colors.gray}
-          size={sizes.h3}
-        />
-      </TouchableOpacity>
+      <View
+        style={[
+          styles.row,
+          {
+            height: 75,
+            flex: 1,
+            justifyContent: 'flex-start',
+            borderLeftWidth: 6,
+            borderColor: '#D3EBF9',
+          },
+        ]}>
+        {getDurationIcon(duration)}
+        <Text style={[styles.tileText, {color: colors.text}]}>{day}</Text>
+      </View>
     </View>
   );
 };
@@ -211,15 +272,28 @@ const styles = StyleSheet.create({
   tile: {
     flexDirection: 'row',
     paddingHorizontal: sizes.padding / 2,
-    paddingVertical: sizes.padding / 2,
+    height: 75,
     backgroundColor: colors.card,
     borderWidth: 1,
+    borderRadius: sizes.radius,
     borderColor: colors.tileBorder,
-    elevation: 5,
     shadowColor: colors.shadow,
     alignItems: 'center',
   },
   tileText: {
     fontSize: sizes.h5,
+  },
+  rowBack: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingRight: 5,
+  },
+  btn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 75,
+    height: 70,
+    alignSelf: 'center',
   },
 });

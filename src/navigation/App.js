@@ -18,6 +18,7 @@ export default function () {
   useEffect(() => {
     getCachedWorries();
     StatusBar.setBackgroundColor(colors.card);
+    StatusBar.setHidden(false);
   }, []);
 
   const getCachedWorries = async () => {

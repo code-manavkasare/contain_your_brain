@@ -17,13 +17,13 @@ export default function Tips({route}) {
     <ScrollView style={styles.screen}>
       <Screen>
         <Heading>{data.heading}</Heading>
-        <Container>
+        <Container marginVertical={sizes.padding / 2}>
           <SubHeading>{data.heading1}</SubHeading>
           <SubHeading color={colors.secondary}>{data.heading2}</SubHeading>
           <Text style={[styles.text, {marginTop: 10}]}>{data.description}</Text>
         </Container>
 
-        <Container>
+        <Container marginVertical={sizes.padding / 2}>
           <SubHeading color={colors.text}>{data.heading3}</SubHeading>
           {data.points.map((item, index) => (
             <Text
@@ -34,7 +34,7 @@ export default function Tips({route}) {
           ))}
         </Container>
 
-        <Container>
+        <Container marginVertical={sizes.padding / 2}>
           <SubHeading color={colors.text}>{data.heading3}</SubHeading>
           <Text style={[styles.text, {marginTop: 10}]}>{data.description}</Text>
         </Container>

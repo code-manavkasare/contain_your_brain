@@ -2,8 +2,12 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {sizes} from '../constants/sizes';
 
-export default function Container({children}) {
-  return <View style={styles.container}>{children}</View>;
+export default function Container({children, marginVertical}) {
+  return (
+    <View style={[styles.container, marginVertical && {marginVertical}]}>
+      {children}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
