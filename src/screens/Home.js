@@ -18,10 +18,13 @@ import {mix, useSpringTransition} from 'react-native-redash';
 import Feather from 'react-native-vector-icons/Feather';
 import Brain from '../assets/svg/Brain';
 import {useSelector} from 'react-redux';
+import downloadWorries from '../services/downloadWorries';
 
 export default function () {
   const {worries} = useSelector(state => state.worries);
-  const handleDownload = () => {};
+  const handleDownload = () => {
+    downloadWorries(worries);
+  };
 
   return (
     <View style={{flex: 1, backgroundColor: colors.background}}>
