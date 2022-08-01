@@ -17,8 +17,12 @@ import Animated, {SpringUtils} from 'react-native-reanimated';
 import {mix, useSpringTransition} from 'react-native-redash';
 import Feather from 'react-native-vector-icons/Feather';
 import Brain from '../assets/svg/Brain';
+import {useSelector} from 'react-redux';
 
 export default function () {
+  const {worries} = useSelector(state => state.worries);
+  const handleDownload = () => {};
+
   return (
     <View style={{flex: 1, backgroundColor: colors.background}}>
       <ScrollView
@@ -33,7 +37,12 @@ export default function () {
         </View>
 
         <View style={styles.tilesContainer}>
-          <Tile style={styles.tile} text="Download my worries" download />
+          <Tile
+            style={styles.tile}
+            text="Download my worries"
+            onPress={handleDownload}
+            download
+          />
           <Tile style={styles.tile} text="About Contain Your Brain" brain />
           <Tile style={styles.tile} text="View instruction screens" eye />
         </View>
@@ -42,7 +51,7 @@ export default function () {
   );
 }
 
-const Tile = ({text, download, brain, eye}) => {
+const Tile = ({text, download, brain, eye, onPress}) => {
   const [showMore, setShowMore] = useState(false);
   const transition = useSpringTransition(showMore, {
     ...SpringUtils.makeDefaultConfig(),
@@ -53,7 +62,8 @@ const Tile = ({text, download, brain, eye}) => {
   const rotateZ = mix(transition, 0, Math.PI / 2);
 
   return (
-    <TouchableWithoutFeedback onPress={() => setShowMore(!showMore)}>
+    <TouchableWithoutFeedback
+      onPress={onPress ? onPress : () => setShowMore(!showMore)}>
       <Animated.View
         style={[
           {
