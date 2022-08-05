@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Screen from '../components/Screen';
 import Heading from '../components/Heading';
 import {colors} from '../constants/colors';
@@ -33,12 +33,17 @@ export default function Worry({route}) {
   const infoRef = useRef();
   const solveRef = useRef();
   const dispatch = useDispatch();
-  const {item, index} = route?.params;
+  const {item} = route?.params;
   const [info, setInfo] = useState(item.info);
   const [solve, setSolve] = useState(item.solve);
   const [worry, setWorry] = useState(item.worry);
   const [status, setStatus] = useState(item.status);
   const [favourite, setFavourite] = useState(item.favourite);
+  const [unsorted, setUnsorted] = useState(item.unsorted);
+
+  useEffect(() => {
+    if (status && unsorted) setUnsorted(false);
+  }, [status]);
 
   const handleFav = () => {};
 
@@ -81,6 +86,7 @@ export default function Worry({route}) {
       status,
       favourite,
     };
+
     dispatch(updateWorry(data));
     goBack();
   };
@@ -157,7 +163,11 @@ export default function Worry({route}) {
             </View>
 
             <TouchableWithoutFeedback
-              onPress={() => navigate('Tips', {type: 'sortMyWorry'})}>
+              onPress={() =>
+                navigate('Tips', {
+                  type: unsorted ? 'unsortedWorry' : 'sortMyWorry',
+                })
+              }>
               <View style={styles.row}>
                 <Entypo
                   name="info-with-circle"
@@ -206,7 +216,7 @@ export default function Worry({route}) {
             </View>
 
             <TouchableWithoutFeedback
-              onPress={() => navigate('Tips', {type: 'sortMyWorry'})}>
+              onPress={() => navigate('Tips', {type: 'solve'})}>
               <View style={styles.row}>
                 <Entypo
                   name="info-with-circle"

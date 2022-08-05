@@ -36,7 +36,8 @@ export default function AddWorry() {
       info,
       favourite,
       solve: '',
-      status: 'unsolvable',
+      unsorted: true,
+      status: null,
     };
     dispatch(appendWorry(data));
     dispatch(setWorryTimes([]));
@@ -57,7 +58,7 @@ export default function AddWorry() {
         <Heading>Add a worry</Heading>
         <View style={styles.row}>
           <TouchableWithoutFeedback
-            onPress={() => navigate('Tips', {type: 'addWorry'})}>
+            onPress={() => navigate('Tips', {type: 'addAWorry'})}>
             <View style={styles.row}>
               <Entypo
                 name="info-with-circle"

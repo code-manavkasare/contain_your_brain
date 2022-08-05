@@ -1,34 +1,32 @@
+import React, {useState} from 'react';
 import {
   Image,
-  ImageEditor,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import Screen from '../components/Screen';
 import Heading from '../components/Heading';
+import Screen from '../components/Screen';
 import {colors} from '../constants/colors';
 import {sizes} from '../constants/sizes';
 
-import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
+import {useDispatch, useSelector} from 'react-redux';
 import Container from '../components/Container';
 import Paragraph from '../components/Paragraph';
-import {useDispatch, useSelector} from 'react-redux';
 
-import {navigate} from '../services/navigation';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import {navigate} from '../services/navigation';
 
 import DraggableFlatList, {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
-import {setWorries, updateWories} from '../redux/actions/worries';
-import Hand from '../assets/svg/hand';
+import Hand from '../assets/svg/Hand';
+import {updateWories} from '../redux/actions/worries';
 
 const sortArray = arr => {
   const sortedArr = [
@@ -39,7 +37,9 @@ const sortArray = arr => {
 };
 
 const filterByStatus = (arr, status) =>
-  arr.filter(item => item.status === status);
+  arr.filter(item =>
+    status === 'unsorted' ? item.unsorted : item.status === status,
+  );
 
 export default function Worries() {
   const route = useRoute();
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: sizes.padding,
-    elevation: 5,
+    elevation: 3,
     alignSelf: 'center',
     width: sizes.width * 0.875,
     shadowRadius: sizes.radius,

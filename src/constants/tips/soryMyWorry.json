@@ -1,0 +1,22 @@
+{
+  "heading": "Unsorted worries",
+  "subheading": "Make the best use of your Worry Time by sorting your worry into one of these categories: ",
+  "sections": [
+    {
+      "label": "Solvable",
+      "paragraphs": [
+        "Worries that you can do something about include problems you can solve, things you can change & situations you have some control over.",
+        "Let's control the controllable, hey?",
+        "These could be disagreements, deadlines, health issues, or the bills, there's always the bills…"
+      ]
+    },
+    {
+      "label": "Unsolvable",
+      "paragraphs": [
+        "Worries you can’t do something about because they are:",
+        "Let’s control the controllable, hey?",
+        "These could be disagreements, deadlines, health issues, or the bills, there's always the bills…"
+      ]
+    }
+  ]
+}
