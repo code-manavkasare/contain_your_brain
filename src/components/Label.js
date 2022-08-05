@@ -3,8 +3,10 @@ import {StyleSheet, Text} from 'react-native';
 import {colors} from '../constants/colors';
 import {sizes} from '../constants/sizes';
 
-export default function Label({children, color}) {
-  return <Text style={[styles.label, color && {color}]}>{children}</Text>;
+export default function Label({children, style, color}) {
+  return (
+    <Text style={[styles.label, style, color && {color}]}>{children}</Text>
+  );
 }
 
 const styles = StyleSheet.create({

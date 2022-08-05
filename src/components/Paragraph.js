@@ -3,8 +3,8 @@ import {StyleSheet, Text} from 'react-native';
 import {colors} from '../constants/colors';
 import {sizes} from '../constants/sizes';
 
-export default function Paragraph({children, style}) {
-  return <Text style={[styles.text, style]}>{children}</Text>;
+export default function Paragraph({children, color, style}) {
+  return <Text style={[styles.text, style, color && {color}]}>{children}</Text>;
 }
 
 const styles = StyleSheet.create({

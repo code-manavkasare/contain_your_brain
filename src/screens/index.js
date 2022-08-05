@@ -7,3 +7,4 @@ export {default as Tips} from './Tips';
 export {default as Worry} from './Worry';
 export {default as Onboard} from './Onboard';
 export {default as WorriesList} from './WorriesList';
+export {default as About} from './About';

@@ -46,7 +46,12 @@ export default function () {
             onPress={handleDownload}
             download
           />
-          <Tile style={styles.tile} text="About Contain Your Brain" brain />
+          <Tile
+            style={styles.tile}
+            text="About Contain Your Brain"
+            brain
+            onPress={() => navigate('About')}
+          />
           <Tile style={styles.tile} text="View instruction screens" eye />
         </View>
       </ScrollView>

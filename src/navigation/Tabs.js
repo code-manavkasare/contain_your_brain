@@ -12,6 +12,7 @@ import Header from '../components/Header';
 import {View} from 'react-native';
 import AddWorryStack from './AddWorryStack';
 import BigHeader from '../components/BigHeader';
+import HomeStack from './HomeStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,9 +38,9 @@ export default function Tabs() {
       }}>
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeStack}
         options={{
-          header: () => <BigHeader />,
+          headerShown: false,
           tabBarIcon: ({focused}) => (
             <Feather
               name="home"
