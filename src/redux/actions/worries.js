@@ -7,6 +7,7 @@ import {
   UPDATE_WORRY,
   UPDATE_WORRY_TIME,
   SET_WORRIES,
+  UPDATE_WORRIES,
 } from './action.types';
 
 export const setWorryTimes = data => ({
@@ -31,6 +32,11 @@ export const updateWorryTime = data => ({
 
 export const setWorries = data => ({
   type: SET_WORRIES,
+  data,
+});
+
+export const updateWories = data => ({
+  type: UPDATE_WORRIES,
   data,
 });
 

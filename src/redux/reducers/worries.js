@@ -6,6 +6,7 @@ import {
   REMOVE_WORRY_TIME,
   SET_WORRIES,
   SET_WORRY_TIMES,
+  UPDATE_WORRIES,
   UPDATE_WORRY,
   UPDATE_WORRY_TIME,
 } from '../actions/action.types';
@@ -45,6 +46,9 @@ const worries = (state = initialState, action) => {
       return {...state, worryTimes: [...worryTimeClone]};
     case SET_WORRIES:
       return {...state, worries: action.data};
+    case UPDATE_WORRIES:
+      storeJson('worries', action.data);
+      return {...state, worries: action.data.map(item => ({...item}))};
     case APPEND_WORRY:
       storeJson('worries', [...state.worries, action.data]);
       showToast('success', 'Success', 'Successfully added your worry');

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -17,10 +18,17 @@ import {sizes} from '../constants/sizes';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Container from '../components/Container';
-import {useSelector} from 'react-redux';
+import Paragraph from '../components/Paragraph';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {navigate} from '../services/navigation';
 import {useNavigation, useRoute} from '@react-navigation/native';
+
+import DraggableFlatList, {
+  ScaleDecorator,
+} from 'react-native-draggable-flatlist';
+import {setWorries, updateWories} from '../redux/actions/worries';
+import Hand from '../assets/svg/hand';
 
 const sortArray = arr => {
   const sortedArr = [
@@ -39,6 +47,7 @@ export default function Worries() {
   const {status} = route?.params;
   const [query, setQuery] = useState('');
   const {worries} = useSelector(state => state.worries);
+  const dispatch = useDispatch();
   const [filteredWorries, setFilteredWorries] = useState([]);
 
   navigation.addListener('focus', () => {
@@ -55,8 +64,25 @@ export default function Worries() {
     );
   };
 
+  const onDragEnd = ({data}) => {
+    setFilteredWorries(data);
+    let _worries = worries.map(item => {
+      const index = data.findIndex(q => q.worry === item.worry);
+      return {
+        worry: data[index].worry,
+        status: data[index].status,
+        favourite: data[index].favourite,
+        solve: data[index].solve,
+        info: data[index].info,
+      };
+    });
+    dispatch(updateWories(_worries));
+  };
+
   return (
-    <ScrollView style={{flex: 1, backgroundColor: colors.background}}>
+    <ScrollView
+      nestedScrollEnabled
+      style={{flex: 1, backgroundColor: colors.background}}>
       <Screen>
         <Heading>
           My {status[0].toUpperCase() + status.slice(1)} worries
@@ -72,16 +98,35 @@ export default function Worries() {
             placeholderTextColor={colors.placeholder}
           />
         </View>
+        <View
+          style={[
+            styles.row,
+            {marginTop: sizes.padding, marginLeft: sizes.padding},
+          ]}>
+          <Hand />
+          <Paragraph
+            style={{fontSize: sizes.p, marginLeft: sizes.padding / 4}}
+            color={colors.gray}>
+            Touch + hold down a worry item + drag to reposition it
+          </Paragraph>
+        </View>
 
-        <View style={{marginTop: sizes.padding * 2}}>
-          {filteredWorries.map((item, index) => (
-            <Tile
-              text={item.worry}
-              favourite={item.favourite}
-              key={index}
-              onPress={() => navigate('Worry', {item, index})}
-            />
-          ))}
+        <View style={{marginTop: sizes.padding / 2}}>
+          <DraggableFlatList
+            data={filteredWorries}
+            keyExtractor={(item, index) => index.toString()}
+            onDragEnd={onDragEnd}
+            renderItem={({item, index, drag, isActive}) => (
+              <Tile
+                drag={drag}
+                isActive={isActive}
+                text={item.worry}
+                favourite={item.favourite}
+                key={index}
+                onPress={() => navigate('Worry', {item, index})}
+              />
+            )}
+          />
         </View>
 
         <Container>
@@ -102,18 +147,23 @@ export default function Worries() {
   );
 }
 
-const Tile = ({text, favourite, onPress}) => (
-  <TouchableWithoutFeedback onPress={onPress ? onPress : () => {}}>
-    <View style={styles.tile}>
-      <AntDesign
-        name={favourite ? 'star' : 'staro'}
-        color={favourite ? colors.secondary : colors.gray}
-        size={sizes.h4}
-      />
-      <Text style={styles.text}>{text}</Text>
-      <Feather name="chevron-right" color={colors.text} size={sizes.h4} />
-    </View>
-  </TouchableWithoutFeedback>
+const Tile = ({text, favourite, onPress, drag, isActive}) => (
+  <ScaleDecorator>
+    <TouchableWithoutFeedback
+      onLongPress={drag}
+      disabled={isActive}
+      onPress={onPress ? onPress : () => {}}>
+      <View style={[styles.tile]}>
+        <AntDesign
+          name={favourite ? 'star' : 'staro'}
+          color={favourite ? colors.secondary : colors.gray}
+          size={sizes.h4}
+        />
+        <Text style={styles.text}>{text}</Text>
+        <Feather name="chevron-right" color={colors.text} size={sizes.h4} />
+      </View>
+    </TouchableWithoutFeedback>
+  </ScaleDecorator>
 );
 
 const styles = StyleSheet.create({
@@ -136,8 +186,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: sizes.padding,
     elevation: 5,
+    alignSelf: 'center',
+    width: sizes.width * 0.875,
+    shadowRadius: sizes.radius,
+    shadowOpacity: 1,
     borderRadius: sizes.radius,
-    shadowColor: colors.shadow,
+    shadowColor: 'rgba(0,0,0,0.25)',
     marginVertical: sizes.padding / 4,
   },
   text: {
