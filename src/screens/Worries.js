@@ -20,6 +20,7 @@ import Container from '../components/Container';
 import {useSelector} from 'react-redux';
 
 import {navigate} from '../services/navigation';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 const sortArray = arr => {
   const sortedArr = [
@@ -29,14 +30,20 @@ const sortArray = arr => {
   return sortedArr;
 };
 
+const filterByStatus = (arr, status) =>
+  arr.filter(item => item.status === status);
+
 export default function Worries() {
+  const route = useRoute();
+  const navigation = useNavigation();
+  const {status} = route?.params;
   const [query, setQuery] = useState('');
   const {worries} = useSelector(state => state.worries);
-  const [filteredWorries, setFilteredWorries] = useState(sortArray(worries));
+  const [filteredWorries, setFilteredWorries] = useState([]);
 
-  useEffect(() => {
-    setFilteredWorries(sortArray(worries));
-  }, [worries]);
+  navigation.addListener('focus', () => {
+    setFilteredWorries(sortArray(filterByStatus(worries, status)));
+  });
 
   const handleSearch = e => {
     setQuery(e);
@@ -51,7 +58,9 @@ export default function Worries() {
   return (
     <ScrollView style={{flex: 1, backgroundColor: colors.background}}>
       <Screen>
-        <Heading>My unsolvable worries</Heading>
+        <Heading>
+          My {status[0].toUpperCase() + status.slice(1)} worries
+        </Heading>
 
         <View style={styles.input}>
           <Feather name="search" color={colors.placeholder} size={sizes.h4} />
