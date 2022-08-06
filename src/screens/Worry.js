@@ -42,7 +42,9 @@ export default function Worry({route}) {
   const [unsorted, setUnsorted] = useState(item.unsorted);
 
   useEffect(() => {
-    if (status && unsorted) setUnsorted(false);
+    if (status && unsorted) {
+      setUnsorted(false);
+    }
   }, [status]);
 
   const handleFav = () => {};
@@ -69,6 +71,7 @@ export default function Worry({route}) {
       id: item.id,
       worry,
       info,
+      unsorted,
       solve,
       status,
       favourite: !favourite,
@@ -81,12 +84,12 @@ export default function Worry({route}) {
     const data = {
       id: item.id,
       worry,
+      unsorted,
       info,
       solve,
       status,
       favourite,
     };
-
     dispatch(updateWorry(data));
     goBack();
   };

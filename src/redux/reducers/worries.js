@@ -65,6 +65,7 @@ const worries = (state = initialState, action) => {
       clone[index].info = action.data.info;
       clone[index].solve = action.data.solve;
       clone[index].worry = action.data.worry;
+      clone[index].unsorted = action.data.unsorted;
       clone[index].status = action.data.status;
       clone[index].favourite = action.data.favourite;
       storeJson('worries', clone);
