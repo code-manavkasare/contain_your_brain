@@ -13,7 +13,7 @@ export const sizes = {
   h1: 44,
   h2: 40,
   h3: 30,
-  h4: 22,
+  h4: 18,
   h5: 16,
   p: 12,
 

@@ -5,10 +5,10 @@ import {colors} from '../constants/colors';
 
 import Feather from 'react-native-vector-icons/Feather';
 
-export default function SectionButton({onPress, text, icon}) {
+export default function SectionButton({onPress, text, icon, width}) {
   return (
     <TouchableWithoutFeedback onPress={onPress ? onPress : () => {}}>
-      <View style={styles.container}>
+      <View style={[styles.container, width && {width}]}>
         <View style={styles.left}>
           <Feather name={icon} color={colors.card} size={sizes.icon} />
         </View>
@@ -22,7 +22,7 @@ export default function SectionButton({onPress, text, icon}) {
 
 const styles = StyleSheet.create({
   container: {
-    width: sizes.width - sizes.padding * 4,
+    width: sizes.width - sizes.padding * 2,
     alignSelf: 'center',
     height: 58,
     flexDirection: 'row',
@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowColor: colors.shadow,
     borderRadius: sizes.radius,
-    marginVertical: sizes.padding,
   },
   left: {
     paddingHorizontal: sizes.padding,

@@ -18,13 +18,17 @@ export default function Button({active, onPress, text}) {
 
 const styles = StyleSheet.create({
   active: {
-    paddingHorizontal: sizes.padding * 2,
+    width: sizes.width * 0.35,
+    alignItems: 'center',
+    // paddingHorizontal: sizes.padding * 2,
     paddingVertical: 16,
     backgroundColor: colors.secondary,
     borderRadius: sizes.radius * 4,
   },
   inactive: {
-    paddingHorizontal: sizes.padding * 2,
+    width: sizes.width * 0.35,
+    alignItems: 'center',
+    // paddingHorizontal: sizes.padding * 2,
     paddingVertical: 16,
     backgroundColor: colors.inactive,
     borderRadius: sizes.radius * 4,

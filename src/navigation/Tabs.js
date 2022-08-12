@@ -89,7 +89,7 @@ export default function Tabs() {
               }}>
               <Feather
                 name="plus-circle"
-                color={focused ? colors.tertiary : colors.secondary}
+                color={colors.secondary}
                 size={sizes.icon * 2}
               />
             </View>

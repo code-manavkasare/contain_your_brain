@@ -34,7 +34,7 @@ export default function Tile({text, selected, onPress, chevron, style}) {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: sizes.padding / 2,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     borderBottomColor: colors.tileBorder,
     flexDirection: 'row',
     alignItems: 'center',

@@ -143,21 +143,27 @@ export default function Worry({route}) {
           </View>
         </Container>
 
-        <View style={[styles.row, {alignItems: 'flex-start'}]}>
-          <View style={{flex: 1}}>
-            <TextInput
-              value={info}
-              onChangeText={e => setInfo(e)}
-              ref={infoRef}
-              multiline
-              style={styles.info}
-            />
-          </View>
+        {info && (
+          <View style={[styles.row, {alignItems: 'flex-start'}]}>
+            <View style={{flex: 1}}>
+              <TextInput
+                value={info}
+                onChangeText={e => setInfo(e)}
+                ref={infoRef}
+                multiline
+                style={styles.info}
+              />
+            </View>
 
-          <TouchableOpacity onPress={handleEditInfo}>
-            <MaterialCommunityIcons dataolor={colors.gray} size={sizes.h3} />
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity onPress={handleEditInfo}>
+              <MaterialCommunityIcons
+                name="pencil-outline"
+                color={colors.gray}
+                size={sizes.h3}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
 
         <Container>
           <View style={[styles.row]}>
@@ -302,7 +308,13 @@ const Checkbox = ({selected, heading, description, onPress}) => (
 
       <View style={{marginLeft: sizes.padding / 2, marginTop: -5}}>
         <Text style={[styles.text, {fontWeight: 'bold'}]}>{heading}</Text>
-        <Text style={[styles.text]}>{description}</Text>
+        <Text
+          style={[
+            styles.text,
+            {fontSize: 14, marginRight: sizes.padding, color: colors.gray},
+          ]}>
+          {description}
+        </Text>
       </View>
     </View>
   </TouchableWithoutFeedback>

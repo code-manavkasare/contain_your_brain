@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: colors.background,
-    paddingVertical: sizes.padding,
+    paddingVertical: sizes.padding / 2,
     paddingHorizontal: sizes.padding,
   },
 });

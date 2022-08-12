@@ -115,7 +115,7 @@ export default function Setup() {
       <View style={styles.container}>
         <SubHeading>Worry times</SubHeading>
 
-        <View style={[styles.row, {marginTop: sizes.padding}]}>
+        <View style={[styles.row, {marginTop: sizes.padding / 2}]}>
           <Label>What time/s do I want to worry?</Label>
           <TouchableWithoutFeedback
             onPress={() => navigate('Tips', {type: 'worryTimes'})}>
@@ -130,6 +130,7 @@ export default function Setup() {
           </TouchableWithoutFeedback>
         </View>
         <SectionButton
+          width={sizes.width * 0.8}
           icon="plus-circle"
           text="Add a Worry time"
           onPress={() => navigate('AddWorryTime')}
@@ -153,10 +154,10 @@ export default function Setup() {
         </Container>
       </View>
 
-      <View style={styles.container}>
+      <View style={{marginTop: -sizes.padding * 2}}>
         <SubHeading>Worry place</SubHeading>
 
-        <View style={[styles.row, {marginTop: sizes.padding}]}>
+        <View style={[styles.row, {marginTop: sizes.padding / 2}]}>
           <Label>Where do I want to worry?</Label>
           <TouchableWithoutFeedback
             onPress={() => navigate('Tips', {type: 'worryPlace'})}>
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: colors.background,
-    paddingVertical: sizes.padding,
+    paddingVertical: sizes.padding / 2,
     paddingHorizontal: sizes.padding * 2,
   },
   container: {

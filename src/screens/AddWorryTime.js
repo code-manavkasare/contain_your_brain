@@ -82,7 +82,9 @@ export default function AddWorryTime({route}) {
       <Time time={time} setTime={setTime} visible={show} setVisible={setShow} />
       <View style={styles.container}>
         <Screen>
-          <Heading>{edit ? 'Update worry time' : 'Add a worry time'}</Heading>
+          <Heading>
+            {edit ? 'Edit a time to worry' : 'Add a worry time'}
+          </Heading>
           <Container>
             <Label>What time do I want to worry?</Label>
             <SectionButton
@@ -264,12 +266,12 @@ const styles = StyleSheet.create({
   scrollview: {
     backgroundColor: colors.background,
   },
-  container: {marginBottom: sizes.padding * 2},
+  container: {marginBottom: sizes.padding},
   row: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: sizes.padding,
+    marginTop: sizes.padding / 2,
   },
   durationContainer: {
     alignItems: 'center',

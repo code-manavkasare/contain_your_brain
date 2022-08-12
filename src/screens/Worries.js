@@ -129,7 +129,7 @@ export default function Worries() {
           />
         </View>
 
-        <Container>
+        {/* <Container>
           <View style={styles.row}>
             <Image
               source={require('../assets/thumbs.png')}
@@ -141,7 +141,7 @@ export default function Worries() {
               time, click on a worry and away you go!
             </Text>
           </View>
-        </Container>
+        </Container> */}
       </Screen>
     </ScrollView>
   );
