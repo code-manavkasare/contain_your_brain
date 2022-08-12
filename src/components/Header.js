@@ -12,7 +12,7 @@ import {sizes} from '../constants/sizes';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {goBack} from '../services/navigation';
 
-export default function Header({showBack}) {
+export default function Header({showBack, vertical}) {
   return (
     <SafeAreaView style={styles.container}>
       {showBack && (
@@ -26,9 +26,13 @@ export default function Header({showBack}) {
         </TouchableOpacity>
       )}
       <Image
-        source={require('../assets/logo.png')}
+        source={
+          vertical
+            ? require('../assets/small-vertical-logo.png')
+            : require('../assets/logo.png')
+        }
         resizeMode="contain"
-        style={styles.logo}
+        style={[styles.logo, vertical && {height: 92.6, width: 62.7}]}
       />
     </SafeAreaView>
   );

@@ -23,7 +23,7 @@ export default function Tabs() {
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
           backgroundColor: colors.card,
-          height: 102,
+          height: sizes.height * 0.08,
           shadowOpacity: 1,
           shadowColor: '#000',
           borderTopWidth: 0,
@@ -70,7 +70,8 @@ export default function Tabs() {
         options={{
           tabBarLabelStyle: {
             color: colors.secondary,
-            marginBottom: sizes.padding * 2,
+            fontSize: 12,
+            marginBottom: sizes.padding,
             fontWeight: 'bold',
           },
           headerShown: false,

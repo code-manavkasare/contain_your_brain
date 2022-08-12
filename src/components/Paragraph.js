@@ -11,5 +11,6 @@ const styles = StyleSheet.create({
   text: {
     color: colors.text,
     fontSize: sizes.h5,
+    fontFamily: 'Lato-Regular',
   },
 });

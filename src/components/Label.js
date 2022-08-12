@@ -11,7 +11,7 @@ export default function Label({children, style, color}) {
 
 const styles = StyleSheet.create({
   label: {
-    fontWeight: 'bold',
+    fontFamily: 'Lato-Regular',
     fontSize: sizes.h5,
     color: colors.secondary,
     marginBottom: sizes.padding / 2,

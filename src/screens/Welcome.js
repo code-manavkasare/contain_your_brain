@@ -18,37 +18,37 @@ const screens = [
   {
     title: 'Welcome!',
     description:
-      "Contain Your Brain is the app that helps you spend less time worrying about your life  and more time living it.Not only does our method work,  it's easy to use!",
+      "Contain Your Brain is the app that helps you spend less time worrying about your life \n and more time living it. \n Not only does our method work, \n it's easy to use!",
   },
   {
     title: 'Choose a Worry Time',
     description:
-      'Choose the most convenient and productive time in the day for you to focus on your worries.',
+      'Choose the most convenient and \n productive time in the day for you to focus \n on your worries.',
   },
   {
     title: 'Choose a Worry Place',
     description:
-      "Once you've organized your worry time, decide where is the best place for you to worry. Pick a place that you have access to everyday, most likely a space in your house, but not your bedroom.",
+      "Once you've organized your worry time, \n decide where is the best place for you to worry. \n Pick a place that you have access to everyday, most likely a space in your house, \n but not your bedroom.",
   },
   {
     title: 'Add your Worries',
     description:
-      'Whenever a worry pops up, contain your brain by adding your worry into the app. You can add as little or as much detail as you like; do whatever works best for you. Highlight the ones you want to focus on the most.',
+      'Whenever a worry pops up, contain your brain by adding your worry into the app. \n You can add as little or as much detail as you like; do whatever works best for you. Highlight the ones you want to focus on the most.',
   },
   {
     title: 'Worry Time!',
     description:
-      "Now it's time to worry when and where it suits you most! Simply click on the worry you want to focus on & use the Contain Your Brain method to organise & address your worry effectively.",
+      "Now it's time to worry when and where \n it suits you most! \n Simply click on the worry you want to focus on & use the Contain Your Brain method to \n organise & address your worry effectively.",
   },
   {
     title: 'Worry Tips',
     description:
-      "Use our clinical psychologist's tips to help you choose the best way to approach your worry and then SOLVE, ACCEPT or REFLECT your way to worrying less & living more!",
+      "Use our clinical psychologist's tips to help you choose the best way to approach your worry \n and then SOLVE, ACCEPT or REFLECT your way to worrying less & living more!",
   },
   {
     title: 'Your Worries are Safe!',
     description:
-      "And don't worry about your worries,they are all safely stored directly on your phone and can only be securely accessed by you. No account sign-up or Internet access is required. Access is via your fingerprint or passcode only.",
+      "And don't worry about your worries,they are all safely stored directly on your phone and can only be securely accessed by you. \n No account sign-up or Internet access is required. Access is via your fingerprint or passcode only.",
   },
 ];
 
@@ -70,7 +70,7 @@ export default function Welcome() {
 
   return (
     <>
-      <Header />
+      <Header vertical />
       <View style={styles.screen}>
         <Carousel
           ref={ref}
@@ -147,15 +147,19 @@ const getImage = index => {
 const renderItem = ({item, index}) => (
   <View style={styles.tile}>
     <Image style={styles.image} resizeMode="contain" source={getImage(index)} />
-    <View
-      style={[
-        styles.tile,
-        {marginTop: sizes.padding * 2, paddingHorizontal: sizes.padding * 2},
-      ]}>
-      <Heading color={colors.text}>{item.title}</Heading>
+    <View style={[styles.tile, {marginTop: sizes.padding * 2}]}>
+      <Heading
+        color={colors.text}
+        style={{marginHorizontal: sizes.padding / 2}}>
+        {item.title}
+      </Heading>
       <View style={{marginTop: sizes.padding}}>
         <Paragraph
-          style={{textAlign: 'center', lineHeight: sizes.h3}}
+          style={{
+            textAlign: 'center',
+            lineHeight: sizes.h3,
+            marginHorizontal: sizes.padding * 2,
+          }}
           color={colors.text}>
           {item.description}
         </Paragraph>

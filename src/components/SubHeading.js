@@ -9,7 +9,7 @@ export default function SubHeading({children, color}) {
 
 const styles = StyleSheet.create({
   subHeading: {
-    fontWeight: 'bold',
+    fontFamily: 'Lato-Bold',
     fontSize: sizes.h4,
     color: colors.primary,
   },

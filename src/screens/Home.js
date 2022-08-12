@@ -31,7 +31,7 @@ export default function () {
       <ScrollView
         contentContainerStyle={{paddingBottom: sizes.padding * 4}}
         style={styles.screen}>
-        <View style={[styles.row, {marginTop: sizes.padding}]}>
+        <View style={[styles.row, {marginTop: 0}]}>
           <VerticalTile type="setup" onPress={() => navigate('Setup')} />
           <VerticalTile type="worries" onPress={() => navigate('Worries')} />
         </View>
@@ -66,7 +66,7 @@ const Tile = ({text, download, brain, eye, onPress}) => {
     overshootClamping: true,
     damping: new Animated.Value(20),
   });
-  const containerHeight = mix(transition, 75, sizes.height * 0.3);
+  const containerHeight = mix(transition, 60, sizes.height * 0.3);
   const rotateZ = mix(transition, 0, Math.PI / 2);
 
   return (
@@ -80,7 +80,8 @@ const Tile = ({text, download, brain, eye, onPress}) => {
             borderBottomColor: colors.tileBorder,
           },
         ]}>
-        <View style={styles.tile}>
+        <View
+          style={[styles.tile, {alignItems: !showMore ? 'center' : 'center'}]}>
           <View style={{marginRight: sizes.padding}}>
             {download && (
               <Feather
@@ -210,7 +211,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
     paddingVertical: sizes.padding,
-    paddingHorizontal: sizes.padding * 1.5,
+    paddingHorizontal: sizes.padding,
   },
   vertical: {
     flex: 1,
@@ -222,19 +223,20 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   horizontal: {
-    height: 88,
+    height: sizes.height * 0.075,
     elevation: 10,
     flexDirection: 'row',
     borderRadius: sizes.radius,
     backgroundColor: colors.card,
     marginHorizontal: sizes.padding / 2,
+    marginTop: sizes.padding,
   },
   imageContainer: {
-    height: 174,
+    height: sizes.height * 0.2,
   },
   imageContainerH: {
     width: '40%',
-    height: 88,
+    height: sizes.height * 0.075,
   },
   image: {
     borderTopRightRadius: sizes.radius,
@@ -272,16 +274,19 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   tilesContainer: {
-    marginTop: sizes.padding * 2,
+    marginTop: sizes.padding,
     backgroundColor: colors.background,
     borderRadius: sizes.radius,
+    width: sizes.width * 0.9,
+    alignSelf: 'center',
     elevation: 10,
     shadowColor: colors.shadow,
   },
   tile: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    paddingVertical: sizes.padding,
+    height: 60,
+    width: sizes.width * 0.9,
     borderRadius: sizes.radius,
     paddingHorizontal: sizes.padding,
     borderBottomWidth: 1,
